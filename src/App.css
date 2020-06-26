@@ -30,12 +30,23 @@
 
 .image-container {
   background-color: #D3D3D3;
-  padding: 5px;
+  padding: 20px;
   border: 1px solid black;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   width: 150px;
+  position: relative;
+}
+
+.close-image-block {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  text-align: center;
 }
 
 .uploaded-image {
