@@ -28,9 +28,26 @@
   color: #61dafb;
 }
 
+.main-container {
+  display: flex;
+  width: 100%;
+}
+
+.main-right{
+  flex: 1 0 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
+.main-left{
+  flex: 1 0 50%
+}
+
 .image-container {
   background-color: #D3D3D3;
   padding: 20px;
+  margin: 5px;
   border: 1px solid black;
   border-radius: 5px;
   display: flex;
@@ -39,14 +56,25 @@
   position: relative;
 }
 
-.close-image-block {
-  display: inline-block;
+.close-image-button {
+  display: block;
   position: absolute;
+  border: none;
+  background: none;
   top: 0;
   left: 0;
   width: 20px;
   height: 20px;
   text-align: center;
+}
+
+.close-image-button:hover {
+  border-radius: 50%;
+  background-color: white;
+}
+
+.close-image-button:focus {
+  outline: none;
 }
 
 .uploaded-image {
@@ -74,6 +102,10 @@
 .image-caption:hover{
   overflow: visible;
   white-space: normal;
+}
+
+@media screen and (max-width: 600px) {
+
 }
 
 @keyframes App-logo-spin {

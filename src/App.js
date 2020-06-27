@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 
-function ImageContainer(props) {
+function UploadedImageContainer(props) {
     return (
         <div className='image-container'>
-            <span className='close-image-block'>x</span>
+            <button className='close-image-button'>x</button>
             <img 
                 className='uploaded-image'  
                 src={props.imagePath}
-                alt=""
+                alt={props.imageCaption}
             />
             <div className='image-caption-container'>
                 <b className='image-caption'>{props.imageCaption}</b>
@@ -24,9 +24,13 @@ const imageDescription = "Roger Federer has decided to sit out the rest of 2020 
 class App extends React.Component {
     render() {
         return (
-            <div>
-                <ImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
-                <ImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
+            <div className='main-container'>
+                <div className='main-left'></div>
+                <div className='main-right'>
+                    <UploadedImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
+                    <UploadedImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
+                    <UploadedImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
+                </div>
             </div>
         );
     }
