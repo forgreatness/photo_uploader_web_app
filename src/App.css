@@ -37,11 +37,12 @@
   flex: 1 0 50%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .main-left{
-  flex: 1 0 50%
+  flex: 1 0 50%;
+  padding: 10px;
 }
 
 .image-container {
@@ -104,8 +105,41 @@
   white-space: normal;
 }
 
-@media screen and (max-width: 600px) {
+.upload-image-form {
+  padding: 10px;
+  margin: 0 auto;
+  border: 2px solid #CCC;
+}
 
+.upload-image-form > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.upload-image-form li {
+  display: flex;
+  padding: 5px;
+}
+
+.upload-image-form li > input {
+  flex-grow: 1;
+}
+
+.upload-image-form button {
+  margin-right: 10px;
+}
+
+label {
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 800px) {
+  .main-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
 }
 
 @keyframes App-logo-spin {
