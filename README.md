@@ -48,6 +48,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
     <img title="Main Layout" src="./demo_images/main.png" width="800" height="597"/>
 </div>
 
+Or go to https://forgreatness.github.io/photo_uploader_web_app to visit the app hosted by git pages.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
