@@ -1,5 +1,5 @@
 # photo_uploader
-A React.js SPA that focus allows the user to upload images to the application
+A React.js SPA that focus on allowing the user to upload images to the application
 
 ## About
 Photo_uploader lets the user upload any photo with a url path to the application and responsively style the page based on the amount of content and screen size. Underneath the expressive UI is the basic state management pattern and the amazing reconcilation update to the virtual dom by React.
