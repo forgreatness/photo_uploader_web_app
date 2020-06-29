@@ -45,7 +45,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Project Demo
 <div float="left">
-    <img title="Main Layout" src="./demo_images/main.png" width="800" height="1024"/>
+    <img title="Main Layout" src="./demo_images/main.png" width="800" height="597"/>
 </div>
 
 ## Learn More
