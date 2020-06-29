@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+const isImageUrl = require('is-image-url');
 
 function UploadedImageContainer(props) {
     return (
         <div className='image-container'>
-            <button className='close-image-button'>x</button>
+            <button className='close-image-button' onClick={props.removeUploadedImage}>x</button>
             <img 
                 className='uploaded-image'  
                 src={props.imagePath}
@@ -19,20 +20,31 @@ function UploadedImageContainer(props) {
 
 function UploadImageForm(props) {
     return (
-        <form className='upload-image-form'>
+        <form className='upload-image-form' onSubmit={props.submitImageInfo} noValidate>
             <ul>
                 <li>
-                    <label htmlFor='image_url'>Image URL</label>
-                    <input type='url' id='image_url' name='image_url' value={props.imagePath} onChange={props.changeImagePath}/>
+                    <div>
+                        <div>
+                            <label htmlFor='imageURL'>Image URL</label>
+                            <input type='url' id='imageURL' name='imageURL' placeholder='Enter URL' value={props.imagePath} onChange={props.changeImageInfo} noValidate/>
+                        </div>
+                        <span className='error'>{props.inputErrors.imageURL}</span>
+                    </div>
                 </li>
                 <li>
-                    <label htmlFor='image_caption'>Image Caption</label>
-                    <input type='text' id='image_caption' name='image_caption' value={props.imageCaption} onChange={props.changeImageCaption}/>
+                    <div>
+                        <div>
+                            <label htmlFor='imageCaption'>Image Caption</label>
+                            <input type='text' id='imageCaption' name='imageCaption' placeholder='Enter Caption' value={props.imageCaption} onChange={props.changeImageInfo} noValidate/>
+                        </div>
+                        <span className='error'>{props.inputErrors.imageCaption}</span>
+                    </div>
                 </li>
                 <li>
-                    <button type='button'>Submit</button>
-                    <button type='button'>Cancel</button>
+                    <button type='submit'>Submit</button>
+                    <button type='button' onClick={props.cancelImageInfo}>Cancel</button>
                 </li>
+                <li id='form-error'>{props.isSubmitError ? 'Please make sure that both the URL and Caption are provided and meets the criteria.' : ''}</li>
             </ul>
         </form>
     )
@@ -43,48 +55,114 @@ class App extends React.Component {
         super(props);
         this.state = {
             uploadedImages: [{
-                imagePath: '',
-                imageCaption: ''
-            }]
+                imageURL: '',
+                imageCaption: '',
+            }],
+            submitError: false,
+            openDialog: false
         };
     }
 
-    handleChangeImagePath = (e) => {
+    handleChangeImageInfo = (e) => {
+        e.preventDefault();
+
+        const { name, value } = e.target;
+
         let uploadedImages = this.state.uploadedImages;
-        uploadedImages[0].imagePath = e.target.value;
+        uploadedImages[this.state.uploadedImages.length-1][name] = value;
+
+        this.setState({
+            uploadedImages: uploadedImages,
+            submitError: false
+        });
+    }
+
+    handleSubmitImageInfo = (e) => {
+        e.preventDefault();
+
+        let uploadedImages = this.state.uploadedImages.slice(0, this.state.uploadedImages.length);     
+        let imageInfo = this.state.uploadedImages[uploadedImages.length-1];
+        let submitError = !isImageUrl(imageInfo.imageURL) || imageInfo.imageCaption.length < 1;
+
+        this.setState({
+            uploadedImages: submitError ? uploadedImages : uploadedImages.concat([{ imageURL: '', imageCaption: '' }]),
+            submitError: submitError
+        });
+    }
+
+    handleCancelImageInfo = () => {
+        let uploadedImages = this.state.uploadedImages;
+        uploadedImages[uploadedImages.length-1].imageURL = '';
+        uploadedImages[uploadedImages.length-1].imageCaption = '';
+        
+        this.setState({
+            uploadedImages: uploadedImages,
+            submitError: false,
+            openDialog: false
+        });
+    }
+
+    handleRemoveUploadedImage = (i) => {
+        let uploadedImages = this.state.uploadedImages;
+        uploadedImages.splice(i,1);
 
         this.setState({
             uploadedImages: uploadedImages
         });
     }
 
-    handleChangeImageCaption = (e) => {
-        let uploadedImages = this.state.uploadedImages;
-        uploadedImages[0].imageCaption = e.target.value;
-
+    handleOpenPhotoEntryDialog = () => {
         this.setState({
-            uploadedImages: uploadedImages
-        })
-    }
-
-    handleSubmitImage = (e) => {
-
+            openDialog: true
+        });
     }
 
     render() {
+        let numOfUploadedImages = this.state.uploadedImages.length - 1;
+        let imageURLInput = this.state.uploadedImages[numOfUploadedImages].imageURL;
+        let imageCaptionInput = this.state.uploadedImages[numOfUploadedImages].imageCaption;
+        let formErrors = {
+            'imageURL': isImageUrl(imageURLInput) ? '' : 'Invalid image URL',
+            'imageCaption': imageCaptionInput.length > 0 ? '' : "Caption can't be empty"
+        };
+
+        let submittedImages = this.state.uploadedImages.slice(0, numOfUploadedImages);
+        
+        let openDialogButton = <button key='openDialogButton' style={{'marginBottom': '20px'}} onClick={this.handleOpenPhotoEntryDialog}>Open photo entry dialog</button>;
+        let photoEntryDialog = <UploadImageForm 
+            key='photoEntryDialog'
+            imagePath={imageURLInput} 
+            imageCaption={imageCaptionInput}
+            changeImageInfo={this.handleChangeImageInfo}
+            submitImageInfo={this.handleSubmitImageInfo}
+            cancelImageInfo={this.handleCancelImageInfo}
+            inputErrors={formErrors}
+            isSubmitError={this.state.submitError}/>;
+        let contentOfDialogContainer = [
+            openDialogButton,
+        ];
+
+        if (this.state.openDialog) {
+            contentOfDialogContainer.push(photoEntryDialog);
+        }
+
         return (
             <div className='main-container'>
                 <div className='main-left'>
-                    <UploadImageForm 
-                        imagePath={this.state.uploadedImages[0].imagePath} 
-                        imageCaption={this.state.uploadedImages[0].imageCaption}
-                        changeImagePath={this.handleChangeImagePath}
-                        changeImageCaption={this.handleChangeImageCaption}/>
+                    {contentOfDialogContainer}
                 </div>
                 <div className='main-right'>
-                    {/* <UploadedImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
-                    <UploadedImageContainer imagePath={imageUrl} imageCaption={imageDescription}/>
-                    <UploadedImageContainer imagePath={imageUrl} imageCaption={imageDescription}/> */}
+                    {
+                        submittedImages.map((submittedImage, i) => {
+                            return (
+                                <UploadedImageContainer
+                                    key={i.toString()}
+                                    imagePath={submittedImage.imageURL} 
+                                    imageCaption={submittedImage.imageCaption} 
+                                    removeUploadedImage={() => this.handleRemoveUploadedImage(i)}/>
+                            );
+                        })
+                    }
                 </div>
             </div>
         );

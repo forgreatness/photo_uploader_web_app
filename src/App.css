@@ -118,11 +118,15 @@
 }
 
 .upload-image-form li {
-  display: flex;
   padding: 5px;
 }
 
-.upload-image-form li > input {
+.upload-image-form li > div > div {
+  display: flex;
+  align-items: baseline;
+}
+
+.upload-image-form li > div > div > input {
   flex-grow: 1;
 }
 
@@ -130,8 +134,18 @@
   margin-right: 10px;
 }
 
+.error {
+  color:#db2269;
+  font-size: 0.625em;
+}
+
 label {
   margin-right: 5px;
+}
+
+#form-error {
+  color:#db2269;
+  padding: 0px;
 }
 
 @media screen and (max-width: 800px) {
