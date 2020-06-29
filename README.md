@@ -1,3 +1,9 @@
+# photo_uploader
+A React.js SPA that focus allows the user to upload images to the application
+
+## About
+Photo_uploader lets the user upload any photo with a url path to the application and responsively style the page based on the amount of content and screen size. Underneath the expressive UI is the basic state management pattern and the amazing reconcilation update to the virtual dom by React.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -37,6 +43,11 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Project Demo
+<div float="left">
+    <img title="Main Layout" src="./demo_images/main.png" width="800" height="1024"/>
+</div>
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -66,3 +77,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Authors
+
+* **Danh Nguyen** - *Initial work* - [forgreatness](https://github.com/forgreatness)
